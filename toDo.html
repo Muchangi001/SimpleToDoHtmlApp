@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: content-box;
+        font-family: "Fira Code", monospace;
+      }
+
+      button {
+        display: inline-block;
+        height: 22px;
+        width: 103px;
+        margin: 5px;
+        border: 0;
+        border-radius: 5px;
+        color: white;
+        border: 1px white solid;
+      }
+      button:active {
+        border: 1px gray solid;
+        background-color: white;
+      }
+      .save {
+        background-color: green;
+      }
+      .save:active {
+        color: green;
+      }
+
+      .reset {
+        background-color: red;
+      }
+      .reset:active {
+        color: red;
+      }
+      .whole {
+        position: relative;
+        text-align: center;
+        height: auto;
+        width: 300px;
+        border: 2px gray solid;
+        margin: 20px;
+        border-radius: 10px;
+      }
+      .ul {
+        overflow: auto;
+        height: 400px;
+        width: 300px;
+        text-align: left;
+      }
+      li {
+        list-style-type: decimal;
+        margin-top: 5px;
+        margin-left: 52px;
+      }
+      input {
+        border: 2px gray solid;
+        border-radius: 5px;
+        display: block;
+        position: relative;
+        left: 37px;
+        width: 222px;
+        height: 21px;
+      }
+      label {
+        position: relative;
+        font-size: 20px;
+      }
+      hr {
+        width: 250px;
+        position: relative;
+        left: 25px;
+        color: gray;
+      }
+    </style>
+    <title>myTODO</title>
+  </head>
+  <body>
+    <div class="whole">
+      <div>
+        <label for="text" id="entry" class="label">TO DO:</label>
+        <input type="text" name="text" id="entry" class="input" />
+        <button class="save">Save</button>
+        <button class="reset">Reset</button>
+      </div>
+      <hr />
+      <div class="ul"><ul id="ul"></ul></div>
+    </div>
+    <script>
+      let todos = [];
+      const reset = document.querySelector(".reset");
+      const save = document.querySelector(".save");
+      const input = document.querySelector(".input");
+      const ul = document.querySelector("#ul");
+      const label = document.querySelector(".label");
+      // let repeated = false;
+      save.addEventListener("click", store);
+      function store() {
+        if (input.value.length < 3) {
+          label.style.color = "red";
+          label.textContent = "Invalid Entry";
+          setTimeout(changeLabel, 1000);
+        } else {
+          todos.push(input.value);
+          localStorage.todo = JSON.stringify(todos);
+          showMyTasks();
+        }
+      }
+
+      todos = JSON.parse(localStorage.todo);
+      if (todos) {
+        for (let todo of todos) {
+          ul.innerHTML += `<li>${todo}</li>`;
+        }
+      }
+      function showMyTasks() {
+        input.value = null;
+        ul.innerHTML = "";
+        for (let todo of todos) {
+          ul.innerHTML += `<li>${todo}</li>`;
+        }
+      }
+      reset.addEventListener("click", rst);
+      function rst() {
+        ul.innerHTML = "";
+        todos = [];
+        localStorage.clear();
+      }
+
+      const changeLabel = () => {
+        label.style.color = "black";
+        label.textContent = "TO DO:";
+      };
+    </script>
+  </body>
+</html>
