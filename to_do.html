@@ -99,7 +99,7 @@
       const input = document.querySelector(".input");
       const ul = document.querySelector("#ul");
       const label = document.querySelector(".label");
-      // let repeated = false;
+      
       save.addEventListener("click", store);
       function store() {
         if (input.value.length < 3) {
@@ -119,6 +119,7 @@
           ul.innerHTML += `<li>${todo}</li>`;
         }
       }
+      
       function showMyTasks() {
         input.value = null;
         ul.innerHTML = "";
@@ -126,6 +127,7 @@
           ul.innerHTML += `<li>${todo}</li>`;
         }
       }
+      
       reset.addEventListener("click", rst);
       function rst() {
         ul.innerHTML = "";
